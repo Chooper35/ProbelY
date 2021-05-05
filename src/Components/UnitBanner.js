@@ -11,7 +11,7 @@ export default class UnitBanner extends Component {
     // console.log(RootNavigation);
   };
   componentDidMount() {
-    console.log('Unit props' + JSON.stringify(this.props));
+    // console.log('Unit props' + JSON.stringify(this.props));
   }
 
   
