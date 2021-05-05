@@ -14,7 +14,7 @@ export default class PatientBanner extends Component {
   };
   componentDidMount() {
     var data = this.props;
-    console.log('PatientBanner+' + JSON.stringify(data));
+    // console.log('PatientBanner+' + JSON.stringify(data));
   }
   render() {
     return (

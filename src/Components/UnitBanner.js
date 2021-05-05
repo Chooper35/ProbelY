@@ -7,12 +7,14 @@ export default class UnitBanner extends Component {
     super(props);
   }
   goPatients = () => {
-    RootNavigation.navigation('PatientScreen');
+    RootNavigation.navigation('PatientScreen',{id:this.props.id});
     // console.log(RootNavigation);
   };
   componentDidMount() {
-    console.log('Unit banner props' + JSON.stringify(this.props));
+    console.log('Unit props' + JSON.stringify(this.props));
   }
+
+  
   render() {
     return (
       <View style={styles.container}>
