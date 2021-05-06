@@ -79,10 +79,11 @@ export default class PatientScreen extends Component {
               rNo={item[8]}
               weight={item[6]}
               dr={item[2]}
+              agri={item[9]}
               heat={item.patientSıcaklık}
               hb={item.patientHB}
               lung={item.patientLung}
-              picture={item.picture}></PatientBanner>
+              picture={"https://www.bhsu.edu/directory/_files/images/no-image-directory.png"}></PatientBanner>
           )}
           keyExtractor={item => item[0]}></FlatList>
       </View>

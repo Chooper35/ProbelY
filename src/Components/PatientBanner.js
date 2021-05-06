@@ -49,13 +49,13 @@ export default class PatientBanner extends Component {
               }}></View>
             <View style={styles.iconContainer}>
               <TouchableOpacity style={styles.popupStyle}>
-                <Text>{this.props.hb}</Text>
+                <Text>36</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.popupStyle}>
-                <Text>{this.props.heat}</Text>
+                <Text>66</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.popupStyle}>
-                <Text>{this.props.lung}</Text>
+                <Text>65</Text>
               </TouchableOpacity>
             </View>
           </View>
