@@ -30,6 +30,7 @@ export default class PatientBanner extends Component {
           <View style={styles.altContainer}>
             <View style={styles.infoContainer}>
               <Text>{this.props.ad}</Text>
+              <Text>{this.props.soyad}</Text>
               <Text>{this.props.ptNo}</Text>
               <Text>{this.props.age}</Text>
               <Text>{this.props.patientS}</Text>

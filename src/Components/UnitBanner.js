@@ -12,9 +12,7 @@ export default class UnitBanner extends Component {
   };
   componentDidMount() {
     // console.log('Unit props' + JSON.stringify(this.props));
-  }
-
-  
+  }  
   render() {
     return (
       <View style={styles.container}>

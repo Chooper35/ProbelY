@@ -42,14 +42,16 @@ export default class PatientScreen extends Component {
 
   state = {
     patients: [],
-    patientsDetail:[],
+    patientsDetail: [],
     isLoading: true,
   };
   getPatientsWithId = () => {
-    fetch(`http://192.168.1.35:3000/patients/serviceId/${this.props.route.params.id}`)
+    fetch(
+      `http://192.168.1.35:3000/patients/serviceId/${this.props.route.params.id}`,
+    )
       .then(response => response.json())
       .then(data => {
-        console.log('Data budur' + JSON.stringify(data));
+        console.log('Data******' + JSON.stringify(data));
         this.setState({
           patients: data,
           isLoading: false,
@@ -58,38 +60,31 @@ export default class PatientScreen extends Component {
       });
   };
 
- 
-  //   componentDidMount() {
-  //     Promise.all([fetch(`http://192.168.1.35:3000/patients/${this.props.route.params.id}`), fetch(``)])
-  
-  //       .then(([res1, res2]) => { 
-  //          return Promise.all([res1.json(), res2.json()]) 
-  //       })
-  //       .then(([res1, res2]) => {
-  //         // set state in here
-  //       });
-  // }
-  
+  componentDidMount() {
+    this.getPatientsWithId();
+  }
+
   render() {
     return (
       <View>
         <FlatList
-          data={DATA}
+          data={this.state.patients}
           renderItem={({item}) => (
             <PatientBanner
-              ad={item.name}
-              ptNo={item.patientNo}
-              age={item.patientAge}
-              patientS={item.patientS}
-              rNo={item.roomNumber}
-              weight={item.patientWeight}
-              dr={item.patientDr}
+              ad={item[3]}
+              soyad={item[4]}
+              ptNo={item[1]}
+              age={item[7]}
+              patientS={item[5]}
+              rNo={item[8]}
+              weight={item[6]}
+              dr={item[2]}
               heat={item.patientSıcaklık}
               hb={item.patientHB}
               lung={item.patientLung}
               picture={item.picture}></PatientBanner>
           )}
-          keyExtractor={item => item.id}></FlatList>
+          keyExtractor={item => item[0]}></FlatList>
       </View>
     );
   }
