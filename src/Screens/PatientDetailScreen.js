@@ -21,12 +21,13 @@ export default class PatientDetailScreen extends Component {
           ></Image>
           <View style={styles.infoContainer}>
             <Text style={styles.textStyle}>
-              {this.props.route.params.data.ad}
+              {this.props.route.params.data.ad+" "+this.props.route.params.data.soyad}
+              
             </Text>
             <Text>{this.props.route.params.data.ptNo}</Text>
             <Text>{this.props.route.params.data.patientS}</Text>
             <Text>Doğum Tarihi:05/11/1999</Text>
-            <Text>Oda Numarası:G-1</Text>
+            <Text>Oda Numarası:{this.props.route.params.data.rNo}</Text>
             <Text>{this.props.route.params.data.dr}</Text>
             <View
               style={{

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, FlatList} from 'react-native';
 import PatientBanner from '../Components/PatientBanner';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const DATA = [
   {
@@ -44,6 +45,7 @@ export default class PatientScreen extends Component {
     patients: [],
     patientsDetail: [],
     isLoading: true,
+    pickerValue: 'Tüm',
   };
   getPatientsWithId = () => {
     fetch(
@@ -60,13 +62,39 @@ export default class PatientScreen extends Component {
       });
   };
 
+  getPatientsWithdoktorId = () => {
+    fetch(
+      `http://192.168.1.35:3000/patients/doktorId/${this.props.route.params.drId}`,
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data******' + JSON.stringify(data));
+        this.setState({
+          patients: data,
+          isLoading: false,
+        });
+        // console.log("Son state ++" + this.state.data);
+      });
+  };
+
   componentDidMount() {
+    console.log(JSON.stringify(this.props));
     this.getPatientsWithId();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.pickerValue !== this.state.pickerValue) {
+      if (this.state.pickerValue == 'Dr') {
+        this.getPatientsWithdoktorId();
+      } else {
+        this.getPatientsWithId();
+      }
+    }
+  }
+
   render() {
-    return (
-      <View>
+    let list;
+      list = (
         <FlatList
           data={this.state.patients}
           renderItem={({item}) => (
@@ -83,9 +111,36 @@ export default class PatientScreen extends Component {
               heat={item.patientSıcaklık}
               hb={item.patientHB}
               lung={item.patientLung}
-              picture={"https://www.bhsu.edu/directory/_files/images/no-image-directory.png"}></PatientBanner>
+              picture={
+                'https://www.bhsu.edu/directory/_files/images/no-image-directory.png'
+              }></PatientBanner>
           )}
           keyExtractor={item => item[0]}></FlatList>
+      );
+    
+  
+    
+    return (
+      <View>
+        <DropDownPicker
+          items={[
+            {label: 'Kendi Hastalarım', value: 'Dr'},
+            {label: 'Servis Hastaları', value: 'Tüm'},
+          ]}
+          defaultValue={this.state.pickerValue}
+          containerStyle={{height: 40}}
+          style={{backgroundColor: '#fafafa'}}
+          itemStyle={{
+            justifyContent: 'flex-start',
+          }}
+          dropDownStyle={{backgroundColor: '#fafafa'}}
+          onChangeItem={item =>
+            this.setState({
+              pickerValue: item.value,
+            })
+          }
+        />
+        {list}
       </View>
     );
   }

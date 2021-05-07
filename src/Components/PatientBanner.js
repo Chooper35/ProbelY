@@ -6,11 +6,11 @@ export default class PatientBanner extends Component {
   constructor(props) {
     super(props);
   }
-  state={
-    data:this.props,
-  }
+  state = {
+    data: this.props,
+  };
   goPatientDetail = () => {
-    RootNavigation.navigation('PatientDetail', { data:this.state.data });
+    RootNavigation.navigation('PatientDetail', {data: this.state.data});
   };
   componentDidMount() {
     var data = this.props;
@@ -29,8 +29,7 @@ export default class PatientBanner extends Component {
           </View>
           <View style={styles.altContainer}>
             <View style={styles.infoContainer}>
-              <Text>{this.props.ad}</Text>
-              <Text>{this.props.soyad}</Text>
+              <Text>{this.props.ad + ' ' + this.props.soyad}</Text>
               <Text>{this.props.ptNo}</Text>
               <Text>{this.props.age}</Text>
               <Text>{this.props.patientS}</Text>
@@ -76,14 +75,14 @@ const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     margin: 5,
     flexDirection: 'row',
   },
   secondifoCont: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
     margin: 5,
     flexDirection: 'row',
   },

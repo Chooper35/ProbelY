@@ -107,6 +107,42 @@ async function selectUnitWithKod(req, res) {
     }
   }
 }
+async function getPatientsWithdoktorId(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: 'AYBERK',
+      password: '123',
+      connectString: 'localhost:1521/xe',
+    });
+
+    const doktorId=req.params;
+    console.log(req.params);
+    console.log('Connected to database');
+    // run execute
+    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy.doktorıd=:doktorId`,doktorId);
+    //
+  } catch (err) {
+    //send error message
+    return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // Always close connections
+        await connection.close();
+        console.log('Close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+      //query return zero employees
+      return res.send('Query send nothing.');
+    } else {
+      //send all employees
+      return res.send(result.rows);
+    }
+  }
+}
 async function getPatientsWithServiceId(req, res) {
   try {
     connection = await oracledb.getConnection({
@@ -156,6 +192,9 @@ app.get('/units/:kod',(req,res) =>{
 app.get('/patients/serviceId/:serviceId/',(req,res)=>{
   getPatientsWithServiceId(req,res);
 });
+app.get('/patients/doktorId/:doktorId' ,(req,res) =>{
+  getPatientsWithdoktorId(req,res);
+})
 // app.get('/patients/:serviceId/:hastaId',(req,res)=>{
 //   getPatientDetailWithServiceId(req,res);
 // });
