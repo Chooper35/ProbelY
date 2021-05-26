@@ -73,7 +73,7 @@ async function selectAllPatients(req, res) {
     }
   }
 }
-async function selectUnitWithKod(req, res) {
+async function selectUnitWithAd(req, res) {
   try {
     connection = await oracledb.getConnection({
       user: 'AYBERK',
@@ -81,10 +81,10 @@ async function selectUnitWithKod(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const kod=req.params;
+    const ad=req.params;
     console.log('Connected to database');
     // run query to get all employees
-    result = await connection.execute(`SELECT * FROM SERVIS WHERE SERVİSKOD=:kod`,kod);
+    result = await connection.execute(`SELECT * FROM SERVIS WHERE "SERVİSAD"  LIKE '%' || :ad || '%'`,ad);
   } catch (err) {
     //send error message
     return res.send(err.message);
@@ -186,8 +186,8 @@ app.get('/units', (req, res) => {
 app.get('/patients', (req, res) => {
   selectAllPatients(req,res);
 });
-app.get('/units/:kod',(req,res) =>{
-  selectUnitWithKod(req,res);
+app.get('/units/:ad',(req,res) =>{
+  selectUnitWithAd(req,res);
 });
 app.get('/patients/serviceId/:serviceId/',(req,res)=>{
   getPatientsWithServiceId(req,res);
@@ -200,5 +200,5 @@ app.get('/patients/doktorId/:doktorId' ,(req,res) =>{
 // });
 
 app.listen(port, () => {
-  console.log(`Listening http://192.168.1.35:${port}`);
+  console.log(`Listening http://192.168.1.41:${port}`);
 });

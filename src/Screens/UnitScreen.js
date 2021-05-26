@@ -33,7 +33,7 @@ export default class UnitScreen extends Component {
 
   getUnitWithCode = () => {
     // console.log(this.state.unitCode);
-    fetch(`http://192.168.1.35:3000/units/${this.state.unitCode}`)
+    fetch(`http://192.168.1.41:3000/units/${this.state.unitCode}`)
       .then(response => response.json())
       .then(data => {
         console.log('Data' + JSON.stringify(data));
@@ -46,7 +46,7 @@ export default class UnitScreen extends Component {
   };
 
   getAllUnits = () => {
-    fetch('http://192.168.1.35:3000/units')
+    fetch('http://192.168.1.41:3000/units')
       .then(response => response.json())
       .then(data => {
         console.log('Data+++++++++++++' + JSON.stringify(data));
@@ -79,10 +79,10 @@ export default class UnitScreen extends Component {
         <View style={styles.topContainer}>
           <TextInput
             style={styles.textInput}
-            placeholder="Servis kodu giriniz."
+            placeholder="Servis adı giriniz."
             onChangeText={unitCode => this.setState({unitCode: unitCode})}
             value={this.state.unitCode}
-            keyboardType="number-pad"></TextInput>
+            keyboardType="default"></TextInput>
           <Button title="Ara" onPress={() => this.getUnitWithCode()}></Button>
         </View>
 
