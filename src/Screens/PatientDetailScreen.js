@@ -1,28 +1,47 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, ScrollView, Image, Button} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import PureChart from 'react-native-pure-chart';
 export default class PatientDetailScreen extends Component {
   constructor(props) {
     super(props);
   }
+  state = {
+    chartValue: 'Ates',
+  };
   componentDidMount() {
-    console.log('Son props' + JSON.stringify(this.props.route.params.data.ad));
+    console.log('Son props' + JSON.stringify(this.props.route.params.data));
   }
   render() {
+    let chart;
+    if (this.state.chartValue == 'Ates') {
+      chart = (
+        <PureChart
+          width={'100%'}
+          height={250}
+          data={[
+            {x: '2018-01-01', y: 30},
+            {x: '2018-01-02', y: 200},
+          ]}
+          type="line"
+        />
+      );
+    } else {
+      chart = <Text>Chart Yok</Text>;
+    }
     return (
-        <ScrollView style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.topContainer}>
           <Image
             style={styles.pictureStyle}
             source={{
-              uri:`${this.props.route.params.data.picture}`
-               
-            }}
-          ></Image>
+              uri: `${this.props.route.params.data.picture}`,
+            }}></Image>
           <View style={styles.infoContainer}>
             <Text style={styles.textStyle}>
-              {this.props.route.params.data.ad+" "+this.props.route.params.data.soyad}
-              
+              {this.props.route.params.data.ad +
+                ' ' +
+                this.props.route.params.data.soyad}
             </Text>
             <Text>{this.props.route.params.data.ptNo}</Text>
             <Text>{this.props.route.params.data.patientS}</Text>
@@ -32,10 +51,9 @@ export default class PatientDetailScreen extends Component {
             <View
               style={{
                 margin: 3,
-                borderBottomColor: "black",
+                borderBottomColor: 'black',
                 borderBottomWidth: 1,
-              }}
-            ></View>
+              }}></View>
           </View>
         </View>
 
@@ -53,10 +71,9 @@ export default class PatientDetailScreen extends Component {
         <View
           style={{
             margin: 3,
-            borderBottomColor: "black",
+            borderBottomColor: 'black',
             borderBottomWidth: 0.5,
-          }}
-        ></View>
+          }}></View>
         <View style={styles.altContainer}>
           <View style={styles.blocks}>
             <Text>Diyet Adı:</Text>
@@ -71,10 +88,9 @@ export default class PatientDetailScreen extends Component {
         <View
           style={{
             margin: 3,
-            borderBottomColor: "black",
+            borderBottomColor: 'black',
             borderBottomWidth: 0.5,
-          }}
-        ></View>
+          }}></View>
         <View style={styles.altContainer}>
           <View style={styles.blocks}>
             <Text>Yattığı Gün:52</Text>
@@ -89,10 +105,9 @@ export default class PatientDetailScreen extends Component {
         <View
           style={{
             margin: 3,
-            borderBottomColor: "black",
+            borderBottomColor: 'black',
             borderBottomWidth: 0.5,
-          }}
-        ></View>
+          }}></View>
         <View style={styles.altContainer}>
           <View style={styles.blocks}>
             <Text>Yeni Tetkik var</Text>
@@ -107,10 +122,9 @@ export default class PatientDetailScreen extends Component {
         <View
           style={{
             margin: 3,
-            borderBottomColor: "black",
+            borderBottomColor: 'black',
             borderBottomWidth: 0.5,
-          }}
-        ></View>
+          }}></View>
         <View style={styles.altContainer}>
           <View style={styles.blocks}>
             <Text>Gebe Değil</Text>
@@ -122,14 +136,43 @@ export default class PatientDetailScreen extends Component {
             <Text>Alerji Yok</Text>
           </View>
         </View>
-    
+
         {/* <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.buttonStyle}><Text>O2</Text></TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyle}><Text>O2</Text></TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyle}><Text>O2</Text></TouchableOpacity>
         
         </View> */}
-       
+        <DropDownPicker
+          items={[
+            {label: 'Ateş Değerleri', value: 'Ates'},
+            {label: 'Kan Şekeri Değerleri', value: 'kansekeri'},
+            // { label: "Karbondioksit Değerleri", value: "CO2" },
+            // { label: "Nabız Değerleri", value: "nabız" },
+            // { label: "O2 Saturasyon Değerleri", value: "O2" },
+            // { label: "Solunum Değerleri", value: "solunum" },
+            // { label: "Tansiyon Değerleri", value: "tansiyon" },
+            // { label: "Tidal volume Değerleri", value: "tidal" },
+            // {
+            //   label: "Kullanılan Antibiyotikler ve Dozu",
+            //   value: "antibiyotik",
+            // },
+            // { label: "Laboratuvar Sonuçları", value: "labo" },
+          ]}
+          defaultValue={this.state.chartValue}
+          containerStyle={{height: 40}}
+          style={{backgroundColor: '#fafafa'}}
+          itemStyle={{
+            justifyContent: 'flex-start',
+          }}
+          dropDownStyle={{backgroundColor: '#fafafa'}}
+          onChangeItem={item =>
+            this.setState({
+              chartValue: item.value,
+            })
+          }
+        />
+        <View style={styles.chartView}>{chart}</View>
       </ScrollView>
     );
   }
@@ -152,6 +195,9 @@ const styles = StyleSheet.create({
   },
   altContainer: {
     flexDirection: 'row',
+  },
+  chartView: {
+    flex: 1,
   },
   blocks: {
     flex: 1,
