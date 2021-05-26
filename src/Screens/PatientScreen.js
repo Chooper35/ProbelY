@@ -58,7 +58,7 @@ export default class PatientScreen extends Component {
           patients: data,
           isLoading: false,
         });
-        // console.log("Son state ++" + this.state.data);
+        //  console.log("Son state dsd++" + this.state.patients);
       });
   };
 
@@ -107,7 +107,7 @@ export default class PatientScreen extends Component {
               rNo={item[8]}
               weight={item[6]}
               dr={item[2]}
-              agri={item[9]}
+              yatisId={item[9]}
               heat={item.patientSıcaklık}
               hb={item.patientHB}
               lung={item.patientLung}

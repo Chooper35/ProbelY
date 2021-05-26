@@ -143,6 +143,42 @@ async function getPatientsWithdoktorId(req, res) {
     }
   }
 }
+async function getPatientsDetail(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: 'AYBERK',
+      password: '123',
+      connectString: 'localhost:1521/xe',
+    });
+
+    const yatisid=req.params;
+    console.log(req.params);
+    console.log('Connected to database');
+    // run execute
+    result = await connection.execute(`SELECT * FROM HASTADETAY hd JOIN hastaolcum ho ON hd.yatısıd=ho.yatısıd WHERE hd.yatısıd=:yatisid`,yatisid);
+    //
+  } catch (err) {
+    //send error message
+    return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // Always close connections
+        await connection.close();
+        console.log('Close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+      //query return zero employees
+      return res.send('Query send nothing.');
+    } else {
+      //send all employees
+      return res.send(result.rows);
+    }
+  }
+}
 async function getPatientsWithServiceId(req, res) {
   try {
     connection = await oracledb.getConnection({
@@ -155,7 +191,7 @@ async function getPatientsWithServiceId(req, res) {
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy."SERVİSID"=:serviceId`,serviceId);
+    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı,hy.yatısıd FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy."SERVİSID"=:serviceId`,serviceId);
     //
   } catch (err) {
     //send error message
@@ -194,6 +230,9 @@ app.get('/patients/serviceId/:serviceId/',(req,res)=>{
 });
 app.get('/patients/doktorId/:doktorId' ,(req,res) =>{
   getPatientsWithdoktorId(req,res);
+})
+app.get('/patients/detail/:yatisid' ,(req,res) =>{
+  getPatientsDetail(req,res);
 })
 // app.get('/patients/:serviceId/:hastaId',(req,res)=>{
 //   getPatientDetailWithServiceId(req,res);

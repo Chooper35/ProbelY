@@ -7,11 +7,26 @@ export default class PatientDetailScreen extends Component {
     super(props);
   }
   state = {
+    data:null,
+    isLoading:true,
     chartValue: 'Ates',
   };
   componentDidMount() {
-    console.log('Son props' + JSON.stringify(this.props.route.params.data));
+    console.log('Son props' + JSON.stringify(this.props.route.params.data.yatisId));
+    this.getPatientDetail();
   }
+  getPatientDetail = () => {
+    fetch(`http://192.168.1.41:3000/patients/detail/${this.props.route.params.data.yatisId}`)
+      .then(response => response.json())
+      .then(data => {
+        // console.log('Data+++++++++++++' + JSON.stringify(data));
+        this.setState({
+          data: data,
+          isLoading: false,
+        });
+         console.log("Son state" + this.state.data);
+      });
+  };
   render() {
     let chart;
     if (this.state.chartValue == 'Ates') {
