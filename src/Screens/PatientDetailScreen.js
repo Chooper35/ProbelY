@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, ScrollView, Image, Button} from 'react-native';
+import {Text, StyleSheet, View, ScrollView, Image,ActivityIndicator, Button} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import PureChart from 'react-native-pure-chart';
 export default class PatientDetailScreen extends Component {
@@ -12,8 +12,11 @@ export default class PatientDetailScreen extends Component {
     chartValue: 'Ates',
   };
   componentDidMount() {
-    console.log('Son props' + JSON.stringify(this.props.route.params.data.yatisId));
+    // console.log('Son props' + JSON.stringify(this.props.route.params.data.yatisId));
     this.getPatientDetail();
+  }
+  componentDidUpdate(prevProps,prevState){
+
   }
   getPatientDetail = () => {
     fetch(`http://192.168.1.41:3000/patients/detail/${this.props.route.params.data.yatisId}`)
@@ -43,6 +46,19 @@ export default class PatientDetailScreen extends Component {
       );
     } else {
       chart = <Text>Chart Yok</Text>;
+    }
+    if (this.state.isLoading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'white',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" color="orange"></ActivityIndicator>
+        </View>
+      );
     }
     return (
       <ScrollView style={styles.container}>
