@@ -1,25 +1,34 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, ScrollView, Image,ActivityIndicator, Button} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  Button,
+} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import PureChart from 'react-native-pure-chart';
+import OlcumComp from '../Components/OlcumComp';
 export default class PatientDetailScreen extends Component {
   constructor(props) {
     super(props);
   }
   state = {
-    data:null,
-    isLoading:true,
+    data: null,
+    olcumler: null,
+    isLoading: true,
     chartValue: 'Ates',
   };
   componentDidMount() {
     // console.log('Son props' + JSON.stringify(this.props.route.params.data.yatisId));
     this.getPatientDetail();
   }
-  componentDidUpdate(prevProps,prevState){
-
-  }
   getPatientDetail = () => {
-    fetch(`http://192.168.1.41:3000/patients/detail/${this.props.route.params.data.yatisId}`)
+    fetch(
+      `http://192.168.1.41:3000/patients/detail/${this.props.route.params.data.yatisId}`,
+    )
       .then(response => response.json())
       .then(data => {
         // console.log('Data+++++++++++++' + JSON.stringify(data));
@@ -27,26 +36,12 @@ export default class PatientDetailScreen extends Component {
           data: data,
           isLoading: false,
         });
-         console.log("Son state" + this.state.data);
+        console.log('Son state' + this.state.data[0]);
       });
   };
+  //Dropdownlistte seçilen ölçüm değeri neyse onun verilerini getirtme fonksiyonu
+ 
   render() {
-    let chart;
-    if (this.state.chartValue == 'Ates') {
-      chart = (
-        <PureChart
-          width={'100%'}
-          height={250}
-          data={[
-            {x: '2018-01-01', y: 30},
-            {x: '2018-01-02', y: 200},
-          ]}
-          type="line"
-        />
-      );
-    } else {
-      chart = <Text>Chart Yok</Text>;
-    }
     if (this.state.isLoading) {
       return (
         <View
@@ -167,43 +162,7 @@ export default class PatientDetailScreen extends Component {
             <Text>Alerji Yok</Text>
           </View>
         </View>
-
-        {/* <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.buttonStyle}><Text>O2</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyle}><Text>O2</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.buttonStyle}><Text>O2</Text></TouchableOpacity>
-        
-        </View> */}
-        <DropDownPicker
-          items={[
-            {label: 'Ateş Değerleri', value: 'Ates'},
-            {label: 'Kan Şekeri Değerleri', value: 'kansekeri'},
-            // { label: "Karbondioksit Değerleri", value: "CO2" },
-            // { label: "Nabız Değerleri", value: "nabız" },
-            // { label: "O2 Saturasyon Değerleri", value: "O2" },
-            // { label: "Solunum Değerleri", value: "solunum" },
-            // { label: "Tansiyon Değerleri", value: "tansiyon" },
-            // { label: "Tidal volume Değerleri", value: "tidal" },
-            // {
-            //   label: "Kullanılan Antibiyotikler ve Dozu",
-            //   value: "antibiyotik",
-            // },
-            // { label: "Laboratuvar Sonuçları", value: "labo" },
-          ]}
-          defaultValue={this.state.chartValue}
-          containerStyle={{height: 40}}
-          style={{backgroundColor: '#fafafa'}}
-          itemStyle={{
-            justifyContent: 'flex-start',
-          }}
-          dropDownStyle={{backgroundColor: '#fafafa'}}
-          onChangeItem={item =>
-            this.setState({
-              chartValue: item.value,
-            })
-          }
-        />
-        <View style={styles.chartView}>{chart}</View>
+        <OlcumComp yatisId={this.props.route.params.data.yatisId}></OlcumComp>
       </ScrollView>
     );
   }
