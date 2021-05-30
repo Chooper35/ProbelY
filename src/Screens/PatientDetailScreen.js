@@ -162,6 +162,7 @@ export default class PatientDetailScreen extends Component {
             <Text>Alerji Yok</Text>
           </View>
         </View>
+        
         <OlcumComp yatisId={this.props.route.params.data.yatisId}></OlcumComp>
       </ScrollView>
     );

@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   ScrollView,
 } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from 'react-native-dropdown-picker'
 import PureChart from 'react-native-pure-chart';
 
 export default class OlcumComp extends Component {
@@ -15,9 +15,11 @@ export default class OlcumComp extends Component {
     super(props);
   }
   state = {
-    olcumler:null,
+    olcumler: null,
     chartValue: 'Ates',
     isLoading: true,
+    atesDeger: [],
+    tarihDeger:[],
   };
 
   componentDidMount() {
@@ -27,52 +29,51 @@ export default class OlcumComp extends Component {
     fetch(`http://192.168.1.41:3000/patients/olcumler/${this.props.yatisId}`)
       .then(response => response.json())
       .then(data => {
-         console.log('Olcumdata' + JSON.stringify(data));
-        this.setState({
+        this.setState(previousState=>({
           olcumler: data,
+          atesDeger: this.state.atesDeger.concat(parseFloat(data[0][2])),
+          tarihDeger:this.state.tarihDeger.concat(data[0][3].toString()),
           isLoading: false,
-        });
-        console.log('Olcumler  ' + this.state.olcumler[0]);
+        }));
+        console.log('Olcumler  ' + this.state.olcumler);
+        console.log('Ates Degeri Tipi= ' +  typeof this.state.tarihDeger[0]);
+        console.log('Ates Degeri= ' +   this.state.tarihDeger);
       });
   };
   render() {
     let chart;
     if (this.state.isLoading) {
-        return (
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: 'white',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <ActivityIndicator size="large" color="blue"></ActivityIndicator>
-            </View>
-          );
-    }
-    else{
-        if (this.state.chartValue == 'Ates') {
-      chart = (
-        <PureChart
-          data={[30,105,100]}
-          type="line"
-        />
+      return (
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'white',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="small" color="blue"></ActivityIndicator>
+        </View>
       );
     } else {
-      chart = <Text>Chart Yok</Text>;
+      if (this.state.chartValue == 'Ates') {
+        chart = <PureChart data={this.state.atesDeger} type="line" />;
+      } else {
+        chart = <Text>Chart Yok</Text>;
+      }
     }
 
-    }
-    
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
+        <View>
+          
+        
         <DropDownPicker
           items={[
             {label: 'Ateş Değerleri', value: 'Ates'},
             {label: 'Kan Şekeri Değerleri', value: 'kansekeri'},
           ]}
           defaultValue={this.state.chartValue}
-          containerStyle={{height: 40,margin:5}}
+          containerStyle={{height: 40, margin:5}}
           style={{backgroundColor: '#fafafa'}}
           itemStyle={{
             justifyContent: 'flex-start',
@@ -84,14 +85,9 @@ export default class OlcumComp extends Component {
             })
           }
         />
-        <View style={
-            {flex:1,}
-        }>
-        {chart} 
-
         </View>
-             
-      </ScrollView>
+        {chart}
+      </View>
     );
   }
 }
@@ -99,5 +95,6 @@ export default class OlcumComp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width:"100%",
   },
 });
