@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import * as RootNavigation from '../Components/RootNavigation';
+import OlcumFeed from './OlcumFeed';
 
 export default class PatientBanner extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class PatientBanner extends Component {
   };
   componentDidMount() {
     var data = this.props;
-    // console.log('PatientBanner+' + JSON.stringify(data));
+    //  console.log('PatientBanner+' + data.yatisId);
   }
   render() {
     return (
@@ -47,15 +48,7 @@ export default class PatientBanner extends Component {
                 borderBottomWidth: 1,
               }}></View>
             <View style={styles.iconContainer}>
-              <TouchableOpacity style={styles.popupStyle}>
-                <Text>36</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.popupStyle}>
-                <Text>66</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.popupStyle}>
-                <Text>65</Text>
-              </TouchableOpacity>
+              <OlcumFeed yatisId={this.state.data.yatisId}></OlcumFeed>
             </View>
           </View>
         </View>

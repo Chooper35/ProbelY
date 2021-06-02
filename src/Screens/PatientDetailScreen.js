@@ -17,7 +17,6 @@ export default class PatientDetailScreen extends Component {
   }
   state = {
     data: null,
-    olcumler: null,
     isLoading: true,
     chartValue: 'Ates',
   };
@@ -36,8 +35,10 @@ export default class PatientDetailScreen extends Component {
           data: data,
           isLoading: false,
         });
-        console.log('Son state' + this.state.data[0]);
-      });
+        console.log('Son state' + this.state.data);
+      }).catch(err=>{
+        alert(err);
+      })
   };
   //Dropdownlistte seçilen ölçüm değeri neyse onun verilerini getirtme fonksiyonu
  

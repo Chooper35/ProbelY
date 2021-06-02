@@ -53,12 +53,14 @@ export default class PatientScreen extends Component {
     )
       .then(response => response.json())
       .then(data => {
-        console.log('Data******' + JSON.stringify(data));
+        // console.log('Data******' + JSON.stringify(data));
         this.setState({
           patients: data,
           isLoading: false,
         });
         //  console.log("Son state dsd++" + this.state.patients);
+      }).catch(err=>{
+        alert(err);
       });
   };
 
@@ -68,12 +70,14 @@ export default class PatientScreen extends Component {
     )
       .then(response => response.json())
       .then(data => {
-        console.log('Data******' + JSON.stringify(data));
+        // console.log('Data******' + JSON.stringify(data));
         this.setState({
           patients: data,
           isLoading: false,
         });
         // console.log("Son state ++" + this.state.data);
+      }).catch(err=>{
+        alert(err);
       });
   };
 
@@ -128,7 +132,7 @@ export default class PatientScreen extends Component {
             {label: 'Servis Hastaları', value: 'Tüm'},
           ]}
           defaultValue={this.state.pickerValue}
-          containerStyle={{height: 40}}
+          containerStyle={{height: 40,margin:5}}
           style={{backgroundColor: '#fafafa'}}
           itemStyle={{
             justifyContent: 'flex-start',

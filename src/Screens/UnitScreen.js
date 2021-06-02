@@ -42,6 +42,8 @@ export default class UnitScreen extends Component {
           isLoading: false,
         });
         // console.log("Son state ++" + this.state.data);
+      }).catch(err=>{
+        alert(err);
       });
   };
 
@@ -55,6 +57,8 @@ export default class UnitScreen extends Component {
           isLoading: false,
         });
         // console.log("Son state ++" + this.state.data);
+      }).catch(err=>{
+        alert(err);
       });
   };
   componentDidMount() {
