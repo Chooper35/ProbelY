@@ -7,51 +7,52 @@ export default class PatientBanner extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   goPatientDetail = () => {
     RootNavigation.navigation('PatientDetail', {data: this.props});
   };
   componentDidMount() {
     var data = this.props;
-    console.log("PatientBannerprops:  " +  JSON.stringify(this.props));
+    // console.log("PatientBannerprops:  " +  JSON.stringify(this.props));
     //  console.log('PatientBanner+' + data.yatisId);
   }
   render() {
     return (
-      <TouchableOpacity onPress={() => this.goPatientDetail()}>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => this.goPatientDetail()}>
           <View>
             <Image
               style={styles.profilePic}
               source={{
                 uri: `${this.props.picture}`,
               }}></Image>
+              <Text>Detaya git.</Text>
           </View>
-          <View style={styles.altContainer}>
-            <View style={styles.infoContainer}>
-              <Text>{this.props.ad + ' ' + this.props.soyad}</Text>
-              <Text>{this.props.ptNo}</Text>
-              <Text>{this.props.age}</Text>
-              <Text>{this.props.patientS}</Text>
-            </View>
-            <View style={styles.secondifoCont}>
-              <Text>{this.props.rNo}</Text>
-              <Text>Basamak:2</Text>
-              <Text>Kg:{this.props.weight}</Text>
-              <Text>Dr:{this.props.dr}</Text>
-            </View>
-            <View
-              style={{
-                margin: 5,
-                borderBottomColor: 'black',
-                borderBottomWidth: 1,
-              }}></View>
-            <View style={styles.iconContainer}>
-              <OlcumFeed yatisId={this.props.yatisId}></OlcumFeed>
-            </View>
+        </TouchableOpacity>
+        <View style={styles.altContainer}>
+          <View style={styles.infoContainer}>
+            <Text>{this.props.ad + ' ' + this.props.soyad}</Text>
+            <Text>{this.props.ptNo}</Text>
+            <Text>{this.props.age}</Text>
+            <Text>{this.props.patientS}</Text>
+          </View>
+          <View style={styles.secondifoCont}>
+            <Text>{this.props.rNo}</Text>
+            <Text>Basamak:2</Text>
+            <Text>Kg:{this.props.weight}</Text>
+            <Text>Dr:{this.props.dr}</Text>
+          </View>
+          <View
+            style={{
+              margin: 5,
+              borderBottomColor: 'black',
+              borderBottomWidth: 1,
+            }}></View>
+          <View style={styles.iconContainer}>
+            <OlcumFeed yatisId={this.props.yatisId}></OlcumFeed>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   }
 }

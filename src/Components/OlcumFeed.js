@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet, View, FlatList,ActivityIndicator} from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  View,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import OlcumBanner from './OlcumBanner';
 
+const minute = 500;
 export default class OlcumFeed extends Component {
   constructor(props) {
     super(props);
@@ -13,11 +20,15 @@ export default class OlcumFeed extends Component {
   };
 
   componentDidMount() {
-    console.log('Propsie' + JSON.stringify(this.props.yatisId));
+    // console.log('Propsie' + JSON.stringify(this.props.yatisId));
     this.getOlcumDegerleri();
   }
 
-  getOlcumDegerleri = () => {
+  intervalId = window.setInterval(() => {
+    this.getOlcumDegerleri();
+  }, 50000);
+
+  getOlcumDegerleri() {
     fetch(`http://192.168.1.41:3000/patients/olcumler/${this.props.yatisId}`)
       .then(response => response.json())
       .then(data => {
@@ -26,23 +37,31 @@ export default class OlcumFeed extends Component {
           olcumler: data,
           isLoading: false,
         }));
-         //console.log('PrevState in fun' + this.state.olcumler);
-        console.log('Olcumler  ' + this.state.olcumler);
+        //console.log('PrevState in fun' + this.state.olcumler);
+        console.log('Olcumler çalıştı. ' + this.state.olcumler);
         // console.log('Ates Degeri Tipi= ' + typeof this.state.atesDeger[0]);
         // console.log('Ates Degeri= ' + this.state.atesDeger);
       })
       .catch(err => {
         alert(err);
       });
-  };
+  }
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size="large" color="orange"></ActivityIndicator>
+        </View>
+      );
+    }
     return (
       <View style={styles.container}>
-        <FlatList
-          data={[1, 2, 3]}
-          renderItem={({item}) => <OlcumBanner></OlcumBanner>}
-          numColumns={1}
-          horizontal={true}></FlatList>
+        <OlcumBanner data={this.state.olcumler}></OlcumBanner>
       </View>
     );
   }
