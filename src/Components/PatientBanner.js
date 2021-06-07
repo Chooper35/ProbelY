@@ -7,14 +7,13 @@ export default class PatientBanner extends Component {
   constructor(props) {
     super(props);
   }
-  state = {
-    data: this.props,
-  };
+  
   goPatientDetail = () => {
-    RootNavigation.navigation('PatientDetail', {data: this.state.data});
+    RootNavigation.navigation('PatientDetail', {data: this.props});
   };
   componentDidMount() {
     var data = this.props;
+    console.log("PatientBannerprops:  " +  JSON.stringify(this.props));
     //  console.log('PatientBanner+' + data.yatisId);
   }
   render() {
@@ -48,7 +47,7 @@ export default class PatientBanner extends Component {
                 borderBottomWidth: 1,
               }}></View>
             <View style={styles.iconContainer}>
-              <OlcumFeed yatisId={this.state.data.yatisId}></OlcumFeed>
+              <OlcumFeed yatisId={this.props.yatisId}></OlcumFeed>
             </View>
           </View>
         </View>

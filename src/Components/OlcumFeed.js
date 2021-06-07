@@ -14,6 +14,7 @@ export default class OlcumFeed extends Component {
 
   componentDidMount() {
     console.log('Propsie' + JSON.stringify(this.props.yatisId));
+    this.getOlcumDegerleri();
   }
 
   getOlcumDegerleri = () => {
@@ -25,8 +26,8 @@ export default class OlcumFeed extends Component {
           olcumler: data,
           isLoading: false,
         }));
-        // console.log('PrevState in fun' + this.state.olcumler);
-        // console.log('Olcumler  ' + this.state.olcumler);
+         //console.log('PrevState in fun' + this.state.olcumler);
+        console.log('Olcumler  ' + this.state.olcumler);
         // console.log('Ates Degeri Tipi= ' + typeof this.state.atesDeger[0]);
         // console.log('Ates Degeri= ' + this.state.atesDeger);
       })

@@ -77,6 +77,7 @@ export default class PatientScreen extends Component {
         });
         // console.log("Son state ++" + this.state.data);
       }).catch(err=>{
+        console.log("Hata"+err);
         alert(err);
       });
   };

@@ -119,7 +119,7 @@ async function getPatientsWithdoktorId(req, res) {
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy.doktorıd=:doktorId`,doktorId);
+    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı,hy.yatısıd FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy.doktorıd=:doktorId`,doktorId);
     //
   } catch (err) {
     //send error message
