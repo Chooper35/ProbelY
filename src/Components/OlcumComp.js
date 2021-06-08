@@ -10,6 +10,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import PureChart from 'react-native-pure-chart';
 
 export default class OlcumComp extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
   }
@@ -21,8 +22,12 @@ export default class OlcumComp extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     this.getOlcumDegerleri();
   }
+  intervalId = window.setInterval(() => {
+    this.getOlcumDegerleri();
+  }, 100000);
   componentDidUpdate(prevProps, prevState) {
     if (prevState.chartValue !== this.state.chartValue) {
       this.getOlcumDegerleri();
@@ -35,6 +40,9 @@ export default class OlcumComp extends Component {
     //   console.log("This State**"+this.state.olcumler[0][2]);
     //   this.getOlcumDegerleri();
     // }
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   getOlcumDegerleri = () => {
     fetch(`http://192.168.1.41:3000/patients/olcumler/${this.props.yatisId}`)
@@ -49,7 +57,8 @@ export default class OlcumComp extends Component {
         // console.log('Olcumler  ' + this.state.olcumler);
         // console.log('Ates Degeri Tipi= ' + typeof this.state.atesDeger[0]);
         // console.log('Ates Degeri= ' + this.state.atesDeger);
-      }).catch(err =>{
+      })
+      .catch(err => {
         alert(err);
       });
   };
@@ -74,110 +83,127 @@ export default class OlcumComp extends Component {
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][2]}`, y: parseFloat(this.state.olcumler[0][1])},
+              {
+                x: `${this.state.olcumler[0][2]}`,
+                y: parseFloat(this.state.olcumler[0][1]),
+              },
             ]}
             type="line"
           />
         );
-      }
-      else if (this.state.chartValue == 'frekans') {
+      } else if (this.state.chartValue == 'frekans') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][4]}`, y: parseFloat(this.state.olcumler[0][3])},
+              {
+                x: `${this.state.olcumler[0][4]}`,
+                y: parseFloat(this.state.olcumler[0][3]),
+              },
             ]}
             type="line"
           />
         );
-      }
-      else if (this.state.chartValue == 'kanb') {
+      } else if (this.state.chartValue == 'kanb') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][6]}`, y: parseFloat(this.state.olcumler[0][5])},
+              {
+                x: `${this.state.olcumler[0][6]}`,
+                y: parseFloat(this.state.olcumler[0][5]),
+              },
             ]}
             type="line"
           />
         );
-      }  
-      else if (this.state.chartValue == 'kans') {
+      } else if (this.state.chartValue == 'kans') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][8]}`, y: parseFloat(this.state.olcumler[0][7])},
+              {
+                x: `${this.state.olcumler[0][8]}`,
+                y: parseFloat(this.state.olcumler[0][7]),
+              },
             ]}
             type="line"
           />
         );
-      } 
-      else if (this.state.chartValue == 'kd') {
+      } else if (this.state.chartValue == 'kd') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][10]}`, y: parseFloat(this.state.olcumler[0][9])},
+              {
+                x: `${this.state.olcumler[0][10]}`,
+                y: parseFloat(this.state.olcumler[0][9]),
+              },
             ]}
             type="line"
           />
         );
-      } 
-      else if (this.state.chartValue == 'nb') {
+      } else if (this.state.chartValue == 'nb') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][12]}`, y: parseFloat(this.state.olcumler[0][11])},
+              {
+                x: `${this.state.olcumler[0][12]}`,
+                y: parseFloat(this.state.olcumler[0][11]),
+              },
             ]}
             type="line"
           />
         );
-      } 
-      else if (this.state.chartValue == 'o2') {
+      } else if (this.state.chartValue == 'o2') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][14]}`, y: parseFloat(this.state.olcumler[0][13])},
+              {
+                x: `${this.state.olcumler[0][14]}`,
+                y: parseFloat(this.state.olcumler[0][13]),
+              },
             ]}
             type="line"
           />
         );
-      } 
-      else if (this.state.chartValue == 'sl') {
+      } else if (this.state.chartValue == 'sl') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][16]}`, y: parseFloat(this.state.olcumler[0][15])},
+              {
+                x: `${this.state.olcumler[0][16]}`,
+                y: parseFloat(this.state.olcumler[0][15]),
+              },
             ]}
             type="line"
           />
         );
-      } 
-      else if (this.state.chartValue == 'dv') {
+      } else if (this.state.chartValue == 'dv') {
         chart = (
           <PureChart
             width={'100%'}
             height={200}
             data={[
-              {x: `${this.state.olcumler[0][18]}`, y: parseFloat(this.state.olcumler[0][17])},
+              {
+                x: `${this.state.olcumler[0][18]}`,
+                y: parseFloat(this.state.olcumler[0][17]),
+              },
             ]}
             type="line"
           />
         );
-      } 
-      
-      else {
+      } else {
         chart = <Text style={{margin: 10}}>Chart Yok</Text>;
       }
     }
@@ -208,7 +234,6 @@ export default class OlcumComp extends Component {
               this.setState({
                 chartValue: item.value,
               })
-              
             }
           />
         </View>

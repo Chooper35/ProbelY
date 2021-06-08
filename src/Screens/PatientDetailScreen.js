@@ -12,6 +12,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import PureChart from 'react-native-pure-chart';
 import OlcumComp from '../Components/OlcumComp';
 export default class PatientDetailScreen extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
   }
@@ -21,27 +22,35 @@ export default class PatientDetailScreen extends Component {
     chartValue: 'Ates',
   };
   componentDidMount() {
+    this._isMounted = true;
     // console.log('Son props' + JSON.stringify(this.props.route.params.data.yatisId));
     this.getPatientDetail();
   }
+  intervalId = window.setInterval(() => {
+    this.getPatientDetail();
+  }, 110000);
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   getPatientDetail = () => {
     fetch(
       `http://192.168.1.41:3000/patients/detail/${this.props.route.params.data.yatisId}`,
     )
       .then(response => response.json())
       .then(data => {
-        // console.log('Data+++++++++++++' + JSON.stringify(data));
-        this.setState({
-          data: data,
-          isLoading: false,
-        });
-        console.log('Son state' + this.state.data);
-      }).catch(err=>{
-        alert(err);
+        if (this._isMounted) {
+          this.setState({
+            data: data,
+            isLoading: false,
+          });
+          console.log('Son state' + this.state.data);
+        }
       })
+      .catch(err => {
+        alert(err);
+      });
   };
-  //Dropdownlistte seçilen ölçüm değeri neyse onun verilerini getirtme fonksiyonu
- 
   render() {
     if (this.state.isLoading) {
       return (
@@ -163,7 +172,7 @@ export default class PatientDetailScreen extends Component {
             <Text>Alerji Yok</Text>
           </View>
         </View>
-        
+
         <OlcumComp yatisId={this.props.route.params.data.yatisId}></OlcumComp>
       </ScrollView>
     );

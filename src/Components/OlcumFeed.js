@@ -10,6 +10,7 @@ import OlcumBanner from './OlcumBanner';
 
 const minute = 500;
 export default class OlcumFeed extends Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
   }
@@ -20,23 +21,29 @@ export default class OlcumFeed extends Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     // console.log('Propsie' + JSON.stringify(this.props.yatisId));
     this.getOlcumDegerleri();
   }
 
   intervalId = window.setInterval(() => {
     this.getOlcumDegerleri();
-  }, 50000);
+  }, 100000);
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
   getOlcumDegerleri() {
     fetch(`http://192.168.1.41:3000/patients/olcumler/${this.props.yatisId}`)
       .then(response => response.json())
       .then(data => {
-        this.setState(prevState => ({
-          prevOlcumler: prevState.olcumler,
-          olcumler: data,
-          isLoading: false,
-        }));
+        if (this._isMounted) {
+          this.setState(prevState => ({
+            prevOlcumler: prevState.olcumler,
+            olcumler: data,
+            isLoading: false,
+          }));
+        }
         //console.log('PrevState in fun' + this.state.olcumler);
         console.log('Olcumler çalıştı. ' + this.state.olcumler);
         // console.log('Ates Degeri Tipi= ' + typeof this.state.atesDeger[0]);
