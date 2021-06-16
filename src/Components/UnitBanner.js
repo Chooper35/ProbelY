@@ -7,11 +7,11 @@ export default class UnitBanner extends Component {
     super(props);
   }
   goPatients = () => {
-    RootNavigation.navigation('PatientScreen',{id:this.props.id,drId:2});
+    RootNavigation.navigation('PatientScreen',{id:this.props.id,drId:this.props.doktorId});
     // console.log(RootNavigation);
   };
   componentDidMount() {
-    // console.log('Unit props' + JSON.stringify(this.props));
+     console.log('Unit props' + JSON.stringify(this.props.doktorId));
   }  
   render() {
     return (
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   fontStyle: {
-    fontSize: 20,
+    fontSize: 20,  
   },
 });

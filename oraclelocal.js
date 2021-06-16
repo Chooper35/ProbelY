@@ -215,6 +215,42 @@ async function getOlcumDegerleri(req, res) {
     }
   }
 }
+async function getDoctorPassword(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: 'AYBERK',
+      password: '123',
+      connectString: 'localhost:1521/xe',
+    });
+
+    const email=req.params;
+    console.log(req.params);
+    console.log('Connected to database');
+    // run execute
+    result = await connection.execute(`Select * from doktor WHERE doktoruname=:email`,email);
+    //
+  } catch (err) {
+    //send error message
+    return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // Always close connections
+        await connection.close();
+        console.log('Close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+      //query return zero employees
+      return res.send('Query send nothing.');
+    } else {
+      //send all employees
+      return res.send(result.rows);
+    }
+  }
+}
 async function getPatientsWithServiceId(req, res) {
   try {
     connection = await oracledb.getConnection({
@@ -270,14 +306,16 @@ app.get('/patients/doktorId/:doktorId' ,(req,res) =>{
 app.get('/patients/detail/:yatisid' ,(req,res) =>{
   getPatientsDetail(req,res);
 })
-
 app.get('/patients/olcumler/:yatisid' ,(req,res) =>{
   getOlcumDegerleri(req,res);
+})
+app.get('/doktor/email/:email' ,(req,res) =>{
+  getDoctorPassword(req,res);
 })
 // app.get('/patients/:serviceId/:hastaId',(req,res)=>{
 //   getPatientDetailWithServiceId(req,res);
 // });
 
 app.listen(port, () => {
-  console.log(`Listening http://192.168.1.41:${port}`);
+  console.log(`Listening http://192.168.1.43:${port}`);
 });

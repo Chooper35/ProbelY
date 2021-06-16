@@ -45,7 +45,7 @@ export default class OlcumComp extends Component {
     this._isMounted = false;
   }
   getOlcumDegerleri = () => {
-    fetch(`http://192.168.1.41:3000/patients/olcumler/${this.props.yatisId}`)
+    fetch(`http://192.168.1.43:3000/patients/olcumler/${this.props.yatisId}`)
       .then(response => response.json())
       .then(data => {
         this.setState(prevState => ({

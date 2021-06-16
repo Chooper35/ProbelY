@@ -33,7 +33,7 @@ export default class UnitScreen extends Component {
 
   getUnitWithCode = () => {
     // console.log(this.state.unitCode);
-    fetch(`http://192.168.1.41:3000/units/${this.state.unitCode}`)
+    fetch(`http://192.168.1.43:3000/units/${this.state.unitCode}`)
       .then(response => response.json())
       .then(data => {
         console.log('Data' + JSON.stringify(data));
@@ -48,7 +48,7 @@ export default class UnitScreen extends Component {
   };
 
   getAllUnits = () => {
-    fetch('http://192.168.1.41:3000/units')
+    fetch('http://192.168.1.43:3000/units')
       .then(response => response.json())
       .then(data => {
         console.log('Data+++++++++++++' + JSON.stringify(data));
@@ -63,6 +63,7 @@ export default class UnitScreen extends Component {
   };
   componentDidMount() {
     this.getAllUnits();
+    console.log("UnitScreen props+"+ JSON.stringify(this.props.route.params.doktorId));
   }
   render() {
     if (this.state.isLoading) {
@@ -93,7 +94,7 @@ export default class UnitScreen extends Component {
         <FlatList
           data={this.state.data}
           renderItem={({item}) => (
-            <UnitBanner id={item[0]} ad={item[2]}></UnitBanner>
+            <UnitBanner id={item[0]} ad={item[2]} doktorId={this.props.route.params.doktorId}></UnitBanner>
           )}
           keyExtractor={item => item[0]}></FlatList>
       </View>
