@@ -78,131 +78,275 @@ export default class OlcumComp extends Component {
       );
     } else {
       if (this.state.chartValue == 'Ates') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][2]}`,
-                y: parseFloat(this.state.olcumler[0][1]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][2] == null ||
+          this.state.olcumler[0][1] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][2]}`,
+                  y: parseFloat(this.state.olcumler[0][1]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'frekans') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][4]}`,
-                y: parseFloat(this.state.olcumler[0][3]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][4] == null ||
+          this.state.olcumler[0][3] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][4]}`,
+                  y: parseFloat(this.state.olcumler[0][3]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'kanb') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][6]}`,
-                y: parseFloat(this.state.olcumler[0][5]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][6] == null ||
+          this.state.olcumler[0][5] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][6]}`,
+                  y: parseFloat(this.state.olcumler[0][5]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'kans') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][8]}`,
-                y: parseFloat(this.state.olcumler[0][7]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][8] == null ||
+          this.state.olcumler[0][7] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][8]}`,
+                  y: parseFloat(this.state.olcumler[0][7]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'kd') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][10]}`,
-                y: parseFloat(this.state.olcumler[0][9]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][10] == null ||
+          this.state.olcumler[0][9] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][10]}`,
+                  y: parseFloat(this.state.olcumler[0][9]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'nb') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][12]}`,
-                y: parseFloat(this.state.olcumler[0][11]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][12] == null ||
+          this.state.olcumler[0][11] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][12]}`,
+                  y: parseFloat(this.state.olcumler[0][11]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'o2') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][14]}`,
-                y: parseFloat(this.state.olcumler[0][13]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][14] == null ||
+          this.state.olcumler[0][13] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][14]}`,
+                  y: parseFloat(this.state.olcumler[0][13]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'sl') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][16]}`,
-                y: parseFloat(this.state.olcumler[0][15]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][16] == null ||
+          this.state.olcumler[0][15] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][16]}`,
+                  y: parseFloat(this.state.olcumler[0][15]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else if (this.state.chartValue == 'dv') {
-        chart = (
-          <PureChart
-            width={'100%'}
-            height={200}
-            data={[
-              {
-                x: `${this.state.olcumler[0][18]}`,
-                y: parseFloat(this.state.olcumler[0][17]),
-              },
-            ]}
-            type="line"
-          />
-        );
+        if (
+          this.state.olcumler[0][18] == null ||
+          this.state.olcumler[0][17] == null
+        ) {
+          chart = (
+            <View
+              style={{
+                margin: 5,
+                padding: 2,
+                flex: 1,
+              }}>
+              <Text>Son Veri Yok</Text>
+            </View>
+          );
+        } else {
+          chart = (
+            <PureChart
+              width={'100%'}
+              height={200}
+              data={[
+                {
+                  x: `${this.state.olcumler[0][18]}`,
+                  y: parseFloat(this.state.olcumler[0][17]),
+                },
+              ]}
+              type="line"
+            />
+          );
+        }
       } else {
         chart = <Text style={{margin: 10}}>Chart Yok</Text>;
       }
