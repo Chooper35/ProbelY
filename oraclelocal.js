@@ -35,7 +35,7 @@ async function selectAllUnits(req, res) {
       return res.send('Query send nothing.');
     } else {
       //send all employees
-      console.log("Result"+result);
+      console.log('Result' + result);
       return res.send(result.rows);
     }
   }
@@ -81,10 +81,13 @@ async function selectUnitWithAd(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const ad=req.params;
+    const ad = req.params;
     console.log('Connected to database');
     // run query to get all employees
-    result = await connection.execute(`SELECT * FROM SERVIS WHERE "SERVİSAD"  LIKE '%' || :ad || '%'`,ad);
+    result = await connection.execute(
+      `SELECT * FROM SERVIS WHERE "SERVİSAD"  LIKE '%' || :ad || '%'`,
+      ad,
+    );
   } catch (err) {
     //send error message
     return res.send(err.message);
@@ -115,11 +118,15 @@ async function getPatientsWithdoktorId(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const doktorId=req.params;
+    const doktorId = req.params.doktorId;
+    const serviceId = req.params.serviceId;
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı,hy.yatısıd FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy.doktorıd=:doktorId`,doktorId);
+    result = await connection.execute(
+      `SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı,hy.yatısıd FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON o."SERVİSID"=hy."SERVİSID" WHERE hy."SERVİSID"=:serviceId  AND hy.doktorıd=:doktorId`,
+      [req.params.serviceId, req.params.doktorId],
+    );
     //
   } catch (err) {
     //send error message
@@ -151,11 +158,14 @@ async function getPatientsDetail(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const yatisid=req.params;
+    const yatisid = req.params;
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`SELECT * FROM HASTADETAY hd JOIN hastaolcum ho ON hd.yatısıd=ho.yatısıd WHERE hd.yatısıd=:yatisid`,yatisid);
+    result = await connection.execute(
+      `SELECT * FROM HASTADETAY hd JOIN hastaolcum ho ON hd.yatısıd=ho.yatısıd WHERE hd.yatısıd=:yatisid`,
+      yatisid,
+    );
     //
   } catch (err) {
     //send error message
@@ -187,11 +197,14 @@ async function getOlcumDegerleri(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const yatisid=req.params;
+    const yatisid = req.params;
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`SELECT * FROM hastaolcum ho WHERE ho.yatısıd=:yatisid`,yatisid);
+    result = await connection.execute(
+      `SELECT * FROM hastaolcum ho WHERE ho.yatısıd=:yatisid`,
+      yatisid,
+    );
     //
   } catch (err) {
     //send error message
@@ -223,11 +236,14 @@ async function getDoctorPassword(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const email=req.params;
+    const email = req.params;
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`Select * from doktor WHERE doktoruname=:email`,email);
+    result = await connection.execute(
+      `Select * from doktor WHERE doktoruname=:email`,
+      email,
+    );
     //
   } catch (err) {
     //send error message
@@ -259,11 +275,14 @@ async function getPatientsWithServiceId(req, res) {
       connectString: 'localhost:1521/xe',
     });
 
-    const serviceId=req.params;
+    const serviceId = req.params;
     console.log(req.params);
     console.log('Connected to database');
     // run execute
-    result = await connection.execute(`SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı,hy.yatısıd FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy."SERVİSID"=:serviceId`,serviceId);
+    result = await connection.execute(
+      `SELECT  hy.hastaId,hy.protokolno,d.doktorad,hb.hastaad,hb.hastasoyad,hb.hastacınsıyet,hb.hastakg,hb.hastayas,o.odaadı,hy.yatısıd FROM HASTAYATIS hy JOIN hastabılgı hb ON hy.hastaıd=hb.hastaıd JOIN doktor d ON hy.doktorıd=d.doktorıd JOIN oda o ON hy."SERVİSID"=o."SERVİSID"  WHERE hy."SERVİSID"=:serviceId`,
+      serviceId,
+    );
     //
   } catch (err) {
     //send error message
@@ -292,26 +311,26 @@ app.get('/units', (req, res) => {
   selectAllUnits(req, res);
 });
 app.get('/patients', (req, res) => {
-  selectAllPatients(req,res);
+  selectAllPatients(req, res);
 });
-app.get('/units/:ad',(req,res) =>{
-  selectUnitWithAd(req,res);
+app.get('/units/:ad', (req, res) => {
+  selectUnitWithAd(req, res);
 });
-app.get('/patients/serviceId/:serviceId/',(req,res)=>{
-  getPatientsWithServiceId(req,res);
+app.get('/patients/serviceId/:serviceId/', (req, res) => {
+  getPatientsWithServiceId(req, res);
 });
-app.get('/patients/doktorId/:doktorId' ,(req,res) =>{
-  getPatientsWithdoktorId(req,res);
-})
-app.get('/patients/detail/:yatisid' ,(req,res) =>{
-  getPatientsDetail(req,res);
-})
-app.get('/patients/olcumler/:yatisid' ,(req,res) =>{
-  getOlcumDegerleri(req,res);
-})
-app.get('/doktor/email/:email' ,(req,res) =>{
-  getDoctorPassword(req,res);
-})
+app.get('/patients/doktorId/:doktorId/:serviceId', (req, res) => {
+  getPatientsWithdoktorId(req, res);
+});
+app.get('/patients/detail/:yatisid', (req, res) => {
+  getPatientsDetail(req, res);
+});
+app.get('/patients/olcumler/:yatisid', (req, res) => {
+  getOlcumDegerleri(req, res);
+});
+app.get('/doktor/email/:email', (req, res) => {
+  getDoctorPassword(req, res);
+});
 // app.get('/patients/:serviceId/:hastaId',(req,res)=>{
 //   getPatientDetailWithServiceId(req,res);
 // });

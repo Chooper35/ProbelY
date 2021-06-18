@@ -66,7 +66,7 @@ export default class PatientScreen extends Component {
 
   getPatientsWithdoktorId = () => {
     fetch(
-      `http://192.168.1.43:3000/patients/doktorId/${this.props.route.params.drId}`,
+      `http://192.168.1.43:3000/patients/doktorId/${this.props.route.params.drId}/${this.props.route.params.id}`,
     )
       .then(response => response.json())
       .then(data => {
