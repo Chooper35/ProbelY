@@ -1,4 +1,4 @@
 # ProbelY
 
 
-React Native ile yaptığım yoğun bakım dashboard uygulaması
+React Native ve Oracle DB  ile yaptığım yoğun bakım dashboard uygulaması
